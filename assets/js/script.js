@@ -60,6 +60,21 @@ function startGame(obj = gameBase) {
     }
     markSelected()
 
+    function markEnable() {
+        gameRuning.frames.forEach(frame => {
+            frame.forEach(row => {
+                row.forEach(letter => {
+                    letter.classList.add("disable")
+                })
+            })
+
+            frame[gameRuning.row].forEach(letter => {
+                letter.classList.remove("disable")
+            })
+        })
+    }
+    markEnable()
+
     console.log(gameRuning)
 
     document.addEventListener("keydown", (e) => {
@@ -80,9 +95,10 @@ function startGame(obj = gameBase) {
 
         switch (key) {
             case "enter":
-                gameRuning.row++
+                gameRuning.row < obj.attempts - 1 ? gameRuning.row++ : gameRuning.row
                 gameRuning.letter = 0
                 markSelected()
+                markEnable()
                 break
 
             case "arrowleft":

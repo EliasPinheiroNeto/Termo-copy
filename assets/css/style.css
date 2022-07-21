@@ -108,3 +108,8 @@ main {
     background-color: goldenrod;
     border: none;
 }
+
+.disable {
+    background-color: #22222E;
+    border: none;
+}
