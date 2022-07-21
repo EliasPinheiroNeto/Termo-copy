@@ -9,6 +9,8 @@ const dataBase = [
     "morro", "pular", "subir", "andar", "nadar", "vasco", "barco", "navio",
 ]
 
+const keyboardLetters = "abcdefghijklmnopgrstuvwxyz"
+
 
 function startGame(obj = gameBase) {
     const main = document.querySelector("main")
@@ -47,15 +49,56 @@ function startGame(obj = gameBase) {
         main.append(frame)
     }
 
+    function markSelected() {
+        gameRuning.frames.forEach(frame => {
+            frame[gameRuning.row].forEach(letter => {
+                letter.classList.remove("selected")
+            })
+
+            frame[gameRuning.row][gameRuning.letter].classList.add("selected")
+        })
+    }
+    markSelected()
+
     console.log(gameRuning)
 
     document.addEventListener("keydown", (e) => {
-        gameRuning.frames.forEach(frame => {
-            frame[gameRuning.row][gameRuning.letter].innerHTML = e.key
-        })
+        const key = e.key.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
 
-        if (gameRuning.letter < obj.letters - 1) {
-            gameRuning.letter++
+        if (keyboardLetters.indexOf(key) != -1) {
+            gameRuning.frames.forEach(frame => {
+                frame[gameRuning.row][gameRuning.letter].innerHTML = key
+            })
+
+            if (gameRuning.letter < obj.letters - 1) {
+                gameRuning.letter++
+            }
+
+            markSelected()
+        }
+
+
+        switch (key) {
+            case "enter":
+                gameRuning.row++
+                gameRuning.letter = 0
+                markSelected()
+                break
+
+            case "arrowleft":
+                gameRuning.letter > 0 ? gameRuning.letter-- : gameRuning.letter
+                markSelected()
+                break
+
+            case "arrowright":
+                gameRuning.letter < obj.letters - 1 ? gameRuning.letter++ : gameRuning.letter
+                markSelected()
+                break
+
+            case "backspace":
+                gameRuning.letter--
+                markSelected()
+                break
         }
     })
 }
