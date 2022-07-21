@@ -77,6 +77,8 @@ function startGame(obj = gameBase) {
 
     console.log(gameRuning)
 
+
+
     document.addEventListener("keydown", (e) => {
         const key = e.key.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
 
@@ -92,13 +94,24 @@ function startGame(obj = gameBase) {
             markSelected()
         }
 
-
         switch (key) {
             case "enter":
-                gameRuning.row < obj.attempts - 1 ? gameRuning.row++ : gameRuning.row
-                gameRuning.letter = 0
-                markSelected()
-                markEnable()
+                let row = gameRuning.frames[0][gameRuning.row]
+                let x = 0
+                for (let i = 0; i < row.length; i++) {
+                    if (row[i].innerHTML == "") {
+                        break
+                    }
+
+                    x++
+                }
+
+                if (x == obj.letters) {
+                    gameRuning.row < obj.attempts - 1 ? gameRuning.row++ : gameRuning.row
+                    gameRuning.letter = 0
+                    markSelected()
+                    markEnable()
+                }
                 break
 
             case "arrowleft":
