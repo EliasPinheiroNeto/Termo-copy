@@ -97,7 +97,7 @@ function startGame(obj = gameBase) {
 
         if (keyboardLetters.indexOf(key) != -1) {
             gameRuning.frames.forEach(frame => {
-                frame[gameRuning.row][gameRuning.letter].innerHTML = key
+                frame.rows[gameRuning.row][gameRuning.letter].innerHTML = key
             })
 
             if (gameRuning.letter < obj.letters - 1) {
@@ -109,7 +109,7 @@ function startGame(obj = gameBase) {
 
         switch (key) {
             case "enter":
-                let row = gameRuning.frames[0][gameRuning.row]
+                let row = gameRuning.frames[0].rows[gameRuning.row]
                 let x = 0
                 for (let i = 0; i < row.length; i++) {
                     if (row[i].innerHTML == "") {
@@ -139,7 +139,7 @@ function startGame(obj = gameBase) {
 
             case "backspace":
                 gameRuning.frames.forEach(frame => {
-                    frame[gameRuning.row][gameRuning.letter].innerHTML = ""
+                    frame.rows[gameRuning.row][gameRuning.letter].innerHTML = ""
                 })
                 gameRuning.letter > 0 ? gameRuning.letter-- : gameRuning.letter
                 markSelected()
@@ -148,4 +148,4 @@ function startGame(obj = gameBase) {
     })
 }
 
-startGame({ ...gameBase, frames: 2 })
+startGame({ ...gameBase, frames: 3 })
