@@ -96,11 +96,14 @@ function startGame(obj = gameBase) {
                 break
 
             case "backspace":
-                gameRuning.letter--
+                gameRuning.frames.forEach(frame => {
+                    frame[gameRuning.row][gameRuning.letter].innerHTML = ""
+                })
+                gameRuning.letter > 0 ? gameRuning.letter-- : gameRuning.letter
                 markSelected()
                 break
         }
     })
 }
 
-startGame()
+startGame({ ...gameBase, frames: 2 })
