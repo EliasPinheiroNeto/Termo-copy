@@ -62,10 +62,16 @@ function startGame(obj = gameBase) {
 
     function markEnable() {
         gameRuning.frames.forEach(frame => {
-            frame.forEach(row => {
-                row.forEach(letter => {
-                    letter.classList.add("disable")
-                })
+            frame.forEach((row, index) => {
+                if (index > gameRuning.row) {
+                    row.forEach(letter => {
+                        letter.classList.add("disable")
+                    })
+                } else if (index < gameRuning.row) {
+                    row.forEach(letter => {
+                        letter.classList.remove("selected")
+                    })
+                }
             })
 
             frame[gameRuning.row].forEach(letter => {
