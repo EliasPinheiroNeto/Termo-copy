@@ -120,6 +120,20 @@ function startGame(obj = gameBase) {
                 }
 
                 if (x == obj.letters) {
+                    gameRuning.frames.forEach(frame => {
+                        frame.rows[gameRuning.row].forEach((letter, index) => {
+                            console.log(letter.innerHTML.toLowerCase())
+                            console.log(frame.word[index])
+                            if (letter.innerHTML.toLowerCase() == frame.word[index]) {
+                                letter.classList.add("right")
+                            } else if (frame.word.indexOf(letter.innerHTML.toLowerCase()) != -1) {
+                                letter.classList.add("amost")
+                            } else {
+                                letter.classList.add("wrong")
+                            }
+                        })
+                    })
+
                     gameRuning.row < obj.attempts - 1 ? gameRuning.row++ : gameRuning.row
                     gameRuning.letter = 0
                     markSelected()
@@ -148,4 +162,4 @@ function startGame(obj = gameBase) {
     })
 }
 
-startGame({ ...gameBase, frames: 3 })
+startGame({ ...gameBase, frames: 2 })
