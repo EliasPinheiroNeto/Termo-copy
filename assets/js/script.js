@@ -26,19 +26,26 @@ function startGame(obj = gameBase) {
         const frame = document.createElement("div")
         frame.classList.add("frame")
 
-        gameRuning.frames.push([])
+        const number = Math.floor(Math.random() * (dataBase.length - 1))
+        randomWord = dataBase[number]
+        console.log(randomWord)
+
+        gameRuning.frames.push({
+            word: randomWord,
+            rows: []
+        })
 
         for (let j = 0; j < obj.attempts; j++) {
             const row = document.createElement("div")
             row.classList.add("row")
 
-            gameRuning.frames[i].push([])
+            gameRuning.frames[i].rows.push([])
 
             for (let k = 0; k < obj.letters; k++) {
                 const letter = document.createElement("div")
                 letter.classList.add("square")
 
-                gameRuning.frames[i][j].push(letter)
+                gameRuning.frames[i].rows[j].push(letter)
 
                 row.append(letter)
             }
@@ -51,18 +58,18 @@ function startGame(obj = gameBase) {
 
     function markSelected() {
         gameRuning.frames.forEach(frame => {
-            frame[gameRuning.row].forEach(letter => {
+            frame.rows[gameRuning.row].forEach(letter => {
                 letter.classList.remove("selected")
             })
 
-            frame[gameRuning.row][gameRuning.letter].classList.add("selected")
+            frame.rows[gameRuning.row][gameRuning.letter].classList.add("selected")
         })
     }
     markSelected()
 
     function markEnable() {
         gameRuning.frames.forEach(frame => {
-            frame.forEach((row, index) => {
+            frame.rows.forEach((row, index) => {
                 if (index > gameRuning.row) {
                     row.forEach(letter => {
                         letter.classList.add("disable")
@@ -74,7 +81,7 @@ function startGame(obj = gameBase) {
                 }
             })
 
-            frame[gameRuning.row].forEach(letter => {
+            frame.rows[gameRuning.row].forEach(letter => {
                 letter.classList.remove("disable")
             })
         })
