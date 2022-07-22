@@ -9,7 +9,7 @@ const dataBase = [
     "morro", "pular", "subir", "andar", "nadar", "vasco", "barco", "navio",
 ]
 
-const keyboardLetters = "abcdefghijklmnopgrstuvwxyz"
+const keyboardLetters = "abcdefghijklmnopqrstuvwxyz"
 
 
 function startGame(obj = gameBase) {
