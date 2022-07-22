@@ -198,4 +198,4 @@ function pressKey(keycode) {
     document.dispatchEvent(e)
 }
 
-startGame({ ...gameBase, frames: 2 })
+startGame({ ...gameBase, frames: 1 })
