@@ -123,9 +123,6 @@ function startGame(obj = gameBase) {
                     let x = 0
 
                     for (let i = 0; i < row.length; i++) {
-                        // console.log(frame)
-                        // console.log(row)
-                        // console.log(`x == ${x}, quadrado,valor == ${row[i].innerHTML}`)
                         if (row[i].innerHTML == "") {
                             break
                         }
@@ -193,6 +190,12 @@ function startGame(obj = gameBase) {
                 break
         }
     })
+}
+
+function pressKey(keycode) {
+    let e = new Event("keydown")
+    e.key = keycode
+    document.dispatchEvent(e)
 }
 
 startGame({ ...gameBase, frames: 2 })
