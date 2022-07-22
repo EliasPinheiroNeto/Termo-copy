@@ -153,9 +153,17 @@ function startGame(obj = gameBase) {
 
             case "backspace":
                 gameRuning.frames.forEach(frame => {
-                    frame.rows[gameRuning.row][gameRuning.letter].innerHTML = ""
+                    const letter = frame.rows[gameRuning.row][gameRuning.letter]
+                    const letterBefore = frame.rows[gameRuning.row][gameRuning.letter - 1]
+
+                    if (letter.innerHTML != "") {
+                        letter.innerHTML = ""
+                    } else if (letterBefore) {
+                        letterBefore.innerHTML = ""
+                        gameRuning.letter > 0 ? gameRuning.letter-- : gameRuning.letter
+                    }
                 })
-                gameRuning.letter > 0 ? gameRuning.letter-- : gameRuning.letter
+
                 markSelected()
                 break
         }
