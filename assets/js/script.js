@@ -28,11 +28,12 @@ function startGame(obj = gameBase) {
 
         const number = Math.floor(Math.random() * (dataBase.length - 1))
         randomWord = dataBase[number]
-        console.log(randomWord)
+        console.log(`Resposta do quadro ${i + 1}: ${randomWord}`)
 
         gameRuning.frames.push({
             word: randomWord,
-            rows: []
+            rows: [],
+            enable: true,
         })
 
         for (let j = 0; j < obj.attempts; j++) {
@@ -62,7 +63,9 @@ function startGame(obj = gameBase) {
                 letter.classList.remove("selected")
             })
 
-            frame.rows[gameRuning.row][gameRuning.letter].classList.add("selected")
+            if (frame.enable) {
+                frame.rows[gameRuning.row][gameRuning.letter].classList.add("selected")
+            }
         })
     }
     markSelected()
@@ -81,9 +84,11 @@ function startGame(obj = gameBase) {
                 }
             })
 
-            frame.rows[gameRuning.row].forEach(letter => {
-                letter.classList.remove("disable")
-            })
+            if (frame.enable) {
+                frame.rows[gameRuning.row].forEach(letter => {
+                    letter.classList.remove("disable")
+                })
+            }
         })
     }
     markEnable()
@@ -97,7 +102,9 @@ function startGame(obj = gameBase) {
 
         if (keyboardLetters.indexOf(key) != -1) {
             gameRuning.frames.forEach(frame => {
-                frame.rows[gameRuning.row][gameRuning.letter].innerHTML = key
+                if (frame.enable) {
+                    frame.rows[gameRuning.row][gameRuning.letter].innerHTML = key
+                }
             })
 
             if (gameRuning.letter < obj.letters - 1) {
@@ -109,31 +116,47 @@ function startGame(obj = gameBase) {
 
         switch (key) {
             case "enter":
-                let row = gameRuning.frames[0].rows[gameRuning.row]
-                let x = 0
-                for (let i = 0; i < row.length; i++) {
-                    if (row[i].innerHTML == "") {
-                        break
+                let next = false
+
+                gameRuning.frames.forEach((frame, index) => {
+                    let row = frame.rows[gameRuning.row]
+                    let x = 0
+
+                    for (let i = 0; i < row.length; i++) {
+                        // console.log(frame)
+                        // console.log(row)
+                        // console.log(`x == ${x}, quadrado,valor == ${row[i].innerHTML}`)
+                        if (row[i].innerHTML == "") {
+                            break
+                        }
+
+                        x++
                     }
 
-                    x++
-                }
+                    if (x == obj.letters) {
+                        next = true
 
-                if (x == obj.letters) {
-                    gameRuning.frames.forEach(frame => {
-                        frame.rows[gameRuning.row].forEach((letter, index) => {
-                            console.log(letter.innerHTML.toLowerCase())
-                            console.log(frame.word[index])
-                            if (letter.innerHTML.toLowerCase() == frame.word[index]) {
-                                letter.classList.add("right")
-                            } else if (frame.word.indexOf(letter.innerHTML.toLowerCase()) != -1) {
-                                letter.classList.add("amost")
-                            } else {
-                                letter.classList.add("wrong")
+                        if (frame.enable) {
+                            let y = 0
+                            frame.rows[gameRuning.row].forEach((letter, index) => {
+                                if (letter.innerHTML.toLowerCase() == frame.word[index]) {
+                                    letter.classList.add("right")
+                                    y++
+                                } else if (frame.word.indexOf(letter.innerHTML.toLowerCase()) != -1) {
+                                    letter.classList.add("amost")
+                                } else {
+                                    letter.classList.add("wrong")
+                                }
+                            })
+
+                            if (y == obj.letters) {
+                                frame.enable = false
                             }
-                        })
-                    })
+                        }
+                    }
+                })
 
+                if (next) {
                     gameRuning.row < obj.attempts - 1 ? gameRuning.row++ : gameRuning.row
                     gameRuning.letter = 0
                     markSelected()
@@ -153,14 +176,16 @@ function startGame(obj = gameBase) {
 
             case "backspace":
                 gameRuning.frames.forEach(frame => {
-                    const letter = frame.rows[gameRuning.row][gameRuning.letter]
-                    const letterBefore = frame.rows[gameRuning.row][gameRuning.letter - 1]
+                    if (frame.enable) {
+                        const letter = frame.rows[gameRuning.row][gameRuning.letter]
+                        const letterBefore = frame.rows[gameRuning.row][gameRuning.letter - 1]
 
-                    if (letter.innerHTML != "") {
-                        letter.innerHTML = ""
-                    } else if (letterBefore) {
-                        letterBefore.innerHTML = ""
-                        gameRuning.letter > 0 ? gameRuning.letter-- : gameRuning.letter
+                        if (letter.innerHTML != "") {
+                            letter.innerHTML = ""
+                        } else if (letterBefore) {
+                            letterBefore.innerHTML = ""
+                            gameRuning.letter > 0 ? gameRuning.letter-- : gameRuning.letter
+                        }
                     }
                 })
 
