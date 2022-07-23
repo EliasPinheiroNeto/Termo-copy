@@ -154,7 +154,7 @@ function startGame(obj = gameBase) {
                 })
 
                 if (next) {
-                    gameRuning.row < obj.attempts - 1 ? gameRuning.row++ : gameRuning.row
+                    gameRuning.row < obj.attempts - 1 ? gameRuning.row++ : gameRuning.frames.forEach(frame => frame.enable = false)
                     gameRuning.letter = 0
                     markSelected()
                     markEnable()
