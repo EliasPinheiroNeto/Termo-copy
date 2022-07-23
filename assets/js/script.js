@@ -20,6 +20,8 @@ function startGame(obj = gameBase) {
         letter: 0,
 
         frames: [],
+        gameEnd: false,
+        gameWin: false,
     }
 
     for (let i = 0; i < obj.frames; i++) {
@@ -34,6 +36,7 @@ function startGame(obj = gameBase) {
             word: randomWord,
             rows: [],
             enable: true,
+            win: false
         })
 
         for (let j = 0; j < obj.attempts; j++) {
@@ -148,6 +151,7 @@ function startGame(obj = gameBase) {
 
                             if (y == obj.letters) {
                                 frame.enable = false
+                                frame.win = true
                             }
                         }
                     }
@@ -155,6 +159,27 @@ function startGame(obj = gameBase) {
 
                 if (next) {
                     gameRuning.row < obj.attempts - 1 ? gameRuning.row++ : gameRuning.frames.forEach(frame => frame.enable = false)
+
+                    let framesWon = 0
+                    let framesEnable = 0
+                    gameRuning.frames.forEach(frame => {
+                        if (frame.enable) {
+                            framesEnable++
+                        }
+
+                        if (frame.win) {
+                            framesWon++
+                        }
+                    })
+
+                    if (framesEnable == 0) {
+                        if (framesWon == obj.frames) {
+                            gameRuning.gameWin = true
+                        }
+                        gameRuning.gameEnd = true
+                        showHud(true)
+                    }
+
                     gameRuning.letter = 0
                     markSelected()
                     markEnable()
@@ -190,6 +215,14 @@ function startGame(obj = gameBase) {
                 break
         }
     })
+
+    let show = false
+    document.addEventListener("click", (e) => {
+        if (gameRuning.gameEnd) {
+            showHud(show)
+            show = !show
+        }
+    })
 }
 
 function pressKey(keycode) {
@@ -198,4 +231,17 @@ function pressKey(keycode) {
     document.dispatchEvent(e)
 }
 
-startGame({ ...gameBase, frames: 1 })
+
+
+function showHud(state) {
+    const hud = document.getElementById("container-end")
+
+    if (state) {
+        hud.style.display = "flex"
+    } else {
+        hud.style.display = "none"
+    }
+
+}
+
+startGame({ ...gameBase, frames: 2 })
