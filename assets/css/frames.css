@@ -1,0 +1,99 @@
+main {
+    width: 90%;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.frame {
+    margin-top: 100px;
+
+    padding-left: 50px;
+    padding-right: 50px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    flex-grow: 1;
+}
+
+.row {
+    width: 100%;
+    max-width: 350px;
+    min-width: 200px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    display: flex;
+    gap: 5px;
+}
+
+.square {
+    width: 20%;
+    aspect-ratio: 1;
+    position: relative;
+
+    font-size: 2rem;
+    line-height: 0px;
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: solid 6px #22222E;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.selected::before {
+    content: '';
+    position: absolute;
+
+    bottom: 0;
+    width: 100%;
+    height: 10%;
+
+    background-color: #22222E;
+}
+
+
+
+.wrong {
+    background-color: #22222E;
+    border: none;
+}
+
+.right {
+    background-color: rgb(75, 121, 63);
+    border: none;
+}
+
+.amost {
+    background-color: goldenrod;
+    border: none;
+}
+
+.disable {
+    background-color: #22222E;
+    border: none;
+}
+
+@media screen and (max-width: 450px) {
+    .frame {
+        margin-top: 30px;
+    }
+
+    .square {
+        font-size: 5rem;
+        border-width: 4px;
+    }
+}

@@ -1,0 +1,54 @@
+.keyboard {
+    width: 90%;
+
+    margin-top: 80px;
+    margin-left: auto;
+    margin-right: auto;
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.keyboard-line {
+    width: 80%;
+
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.key {
+    min-width: 40px;
+    height: 40px;
+
+    padding: 5px;
+
+    color: #ADA9BA;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #49486b;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 450px) {
+    .keyboard-line {
+        width: 100%;
+    }
+
+    .key {
+        min-width: 15px;
+        height: 25px;
+
+        font-size: 3rem;
+        border-radius: 2px;
+
+        user-select: none;
+    }
+}
