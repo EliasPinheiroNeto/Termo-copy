@@ -5,9 +5,8 @@ const gameBase = {
 }
 
 
-const dataBase = [
-    "morro", "pular", "subir", "andar", "nadar", "vasco", "barco", "navio",
-]
+import json from "../../src/dataBase.json" assert {type: 'json'}
+const dataBase = json
 
 const keyboardLetters = "abcdefghijklmnopqrstuvwxyz"
 
@@ -29,7 +28,8 @@ function startGame(obj = gameBase) {
         frame.classList.add("frame")
 
         const number = Math.floor(Math.random() * (dataBase.length - 1))
-        randomWord = dataBase[number]
+        const randomWord = dataBase[number].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+
         console.log(`Resposta do quadro ${i + 1}: ${randomWord}`)
 
         gameRuning.frames.push({
@@ -244,4 +244,4 @@ function showHud(state) {
 
 }
 
-startGame({ ...gameBase, frames: 2 })
+startGame({ ...gameBase })
