@@ -178,8 +178,8 @@ function startGame(obj = gameBase) {
 
                             let s = gameRuning.frames.reduce((string, frame) => string + frame.word + ", ", "")
                             addTagInHud("Parabens, você acertou a palavra", "h2")
-                            addTagInHud(`Tentativas: ${gameRuning.row}`)
-                            addTagInHud(`As palavras eram: ${s}`)
+                            addTagInHud(`Tentativas: ${gameRuning.row}`, "p")
+                            addTagInHud(`As palavras eram: ${s}`, "p")
                         }
                         gameRuning.gameEnd = true
                         showHud(true)
