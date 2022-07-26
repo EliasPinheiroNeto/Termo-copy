@@ -263,4 +263,4 @@ function addTagInHud(text, tag) {
     hud.append(newTag)
 }
 
-startGame({ ...gameBase, frames: 3 })
+startGame({ ...gameBase, frames: 1 })
