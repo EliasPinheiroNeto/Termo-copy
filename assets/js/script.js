@@ -175,9 +175,15 @@ function startGame(obj = gameBase) {
                     if (framesEnable == 0) {
                         if (framesWon == obj.frames) {
                             gameRuning.gameWin = true
+
+                            let s = gameRuning.frames.reduce((string, frame) => string + frame.word + ", ", "")
+                            addTagInHud("Parabens, você acertou a palavra", "h2")
+                            addTagInHud(`Tentativas: ${gameRuning.row}`)
+                            addTagInHud(`As palavras eram: ${s}`)
                         }
                         gameRuning.gameEnd = true
                         showHud(true)
+
                     }
 
                     gameRuning.letter = 0
@@ -244,4 +250,12 @@ function showHud(state) {
 
 }
 
-startGame({ ...gameBase })
+function addTagInHud(text, tag) {
+    const hud = document.getElementById("container-end").querySelector("div")
+    const newTag = document.createElement(tag)
+
+    newTag.innerHTML = text
+    hud.append(newTag)
+}
+
+startGame({ ...gameBase, frames: 3 })
