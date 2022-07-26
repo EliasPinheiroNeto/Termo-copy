@@ -180,6 +180,11 @@ function startGame(obj = gameBase) {
                             addTagInHud("Parabens, você acertou a palavra", "h2")
                             addTagInHud(`Tentativas: ${gameRuning.row}`, "p")
                             addTagInHud(`As palavras eram: ${s}`, "p")
+                        } else {
+                            let s = gameRuning.frames.reduce((string, frame) => string + frame.word + ", ", "")
+                            addTagInHud("Que pena, você não conseguiu dessa vez", "h2")
+                            addTagInHud(`Tentativas: ${gameRuning.row}`, "p")
+                            addTagInHud(`As palavras eram: ${s}`, "p")
                         }
                         gameRuning.gameEnd = true
                         showHud(true)
