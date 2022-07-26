@@ -87,7 +87,7 @@ main {
     border: none;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
     .frame {
         margin-top: 30px;
     }

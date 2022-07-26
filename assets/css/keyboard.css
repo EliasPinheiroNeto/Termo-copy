@@ -37,7 +37,7 @@
     box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.2);
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
     .keyboard-line {
         width: 100%;
     }
