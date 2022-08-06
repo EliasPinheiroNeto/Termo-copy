@@ -236,12 +236,6 @@ function startGame(obj = gameBase) {
     })
 }
 
-function pressKey(keycode) {
-    let e = new Event("keydown")
-    e.key = keycode
-    document.dispatchEvent(e)
-}
-
 
 
 function showHud(state) {
