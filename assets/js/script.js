@@ -119,81 +119,84 @@ function startGame(obj = gameBase) {
 
         switch (key) {
             case "enter":
-                let next = false
+                if (gameRuning.gameEnd == false) {
 
-                gameRuning.frames.forEach((frame, index) => {
-                    let row = frame.rows[gameRuning.row]
-                    let x = 0
+                    let next = false
 
-                    for (let i = 0; i < row.length; i++) {
-                        if (row[i].innerHTML == "") {
-                            break
-                        }
+                    gameRuning.frames.forEach((frame, index) => {
+                        let row = frame.rows[gameRuning.row]
+                        let x = 0
 
-                        x++
-                    }
-
-                    if (x == obj.letters) {
-                        next = true
-
-                        if (frame.enable) {
-                            let y = 0
-                            frame.rows[gameRuning.row].forEach((letter, index) => {
-                                if (letter.innerHTML.toLowerCase() == frame.word[index]) {
-                                    letter.classList.add("right")
-                                    y++
-                                } else if (frame.word.indexOf(letter.innerHTML.toLowerCase()) != -1) {
-                                    letter.classList.add("amost")
-                                } else {
-                                    letter.classList.add("wrong")
-                                }
-                            })
-
-                            if (y == obj.letters) {
-                                frame.enable = false
-                                frame.win = true
+                        for (let i = 0; i < row.length; i++) {
+                            if (row[i].innerHTML == "") {
+                                break
                             }
-                        }
-                    }
-                })
 
-                if (next) {
-                    gameRuning.row < obj.attempts - 1 ? gameRuning.row++ : gameRuning.frames.forEach(frame => frame.enable = false)
-
-                    let framesWon = 0
-                    let framesEnable = 0
-                    gameRuning.frames.forEach(frame => {
-                        if (frame.enable) {
-                            framesEnable++
+                            x++
                         }
 
-                        if (frame.win) {
-                            framesWon++
+                        if (x == obj.letters) {
+                            next = true
+
+                            if (frame.enable) {
+                                let y = 0
+                                frame.rows[gameRuning.row].forEach((letter, index) => {
+                                    if (letter.innerHTML.toLowerCase() == frame.word[index]) {
+                                        letter.classList.add("right")
+                                        y++
+                                    } else if (frame.word.indexOf(letter.innerHTML.toLowerCase()) != -1) {
+                                        letter.classList.add("amost")
+                                    } else {
+                                        letter.classList.add("wrong")
+                                    }
+                                })
+
+                                if (y == obj.letters) {
+                                    frame.enable = false
+                                    frame.win = true
+                                }
+                            }
                         }
                     })
 
-                    if (framesEnable == 0) {
-                        if (framesWon == obj.frames) {
-                            gameRuning.gameWin = true
+                    if (next) {
+                        gameRuning.row < obj.attempts - 1 ? gameRuning.row++ : gameRuning.frames.forEach(frame => frame.enable = false)
 
-                            let s = gameRuning.frames.reduce((string, frame) => string + frame.word + ", ", "")
-                            addTagInHud("Parabens, você acertou a palavra", "h2")
-                            addTagInHud(`Tentativas: ${gameRuning.row}`, "p")
-                            addTagInHud(`As palavras eram: ${s}`, "p")
-                        } else {
-                            let s = gameRuning.frames.reduce((string, frame) => string + frame.word + ", ", "")
-                            addTagInHud("Que pena, você não conseguiu dessa vez", "h2")
-                            addTagInHud(`Tentativas: ${gameRuning.row}`, "p")
-                            addTagInHud(`As palavras eram: ${s}`, "p")
+                        let framesWon = 0
+                        let framesEnable = 0
+                        gameRuning.frames.forEach(frame => {
+                            if (frame.enable) {
+                                framesEnable++
+                            }
+
+                            if (frame.win) {
+                                framesWon++
+                            }
+                        })
+
+                        if (framesEnable == 0) {
+                            if (framesWon == obj.frames) {
+                                gameRuning.gameWin = true
+
+                                let s = gameRuning.frames.reduce((string, frame) => string + frame.word + ", ", "")
+                                addTagInHud("Parabens, você acertou a palavra", "h2")
+                                addTagInHud(`Tentativas: ${gameRuning.row}`, "p")
+                                addTagInHud(`As palavras eram: ${s}`, "p")
+                            } else {
+                                let s = gameRuning.frames.reduce((string, frame) => string + frame.word + ", ", "")
+                                addTagInHud("Que pena, você não conseguiu dessa vez", "h2")
+                                addTagInHud(`Tentativas: ${gameRuning.row}`, "p")
+                                addTagInHud(`As palavras eram: ${s}`, "p")
+                            }
+                            gameRuning.gameEnd = true
+                            showHud(true)
+
                         }
-                        gameRuning.gameEnd = true
-                        showHud(true)
 
+                        gameRuning.letter = 0
+                        markSelected()
+                        markEnable()
                     }
-
-                    gameRuning.letter = 0
-                    markSelected()
-                    markEnable()
                 }
                 break
 
